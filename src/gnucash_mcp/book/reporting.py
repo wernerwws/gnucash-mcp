@@ -32,8 +32,8 @@ from gnucash_mcp._format import _format_number
 # Account-type groups used across the reports. Defined at module level
 # so the SQL IN() clauses share a single canonical definition rather
 # than drifting across methods.
-_ASSET_TYPES = frozenset({"ASSET", "BANK", "CASH", "STOCK", "MUTUAL"})
-_LIABILITY_TYPES = frozenset({"LIABILITY", "CREDIT"})
+_ASSET_TYPES = frozenset({"ASSET", "BANK", "CASH", "STOCK", "MUTUAL", "RECEIVABLE"})
+_LIABILITY_TYPES = frozenset({"LIABILITY", "CREDIT", "PAYABLE"})
 _EQUITY_TYPES = frozenset({"EQUITY"})
 _NET_INCOME_TYPES = frozenset({"INCOME", "EXPENSE"})
 _CASH_TYPES = frozenset({"BANK", "CASH"})

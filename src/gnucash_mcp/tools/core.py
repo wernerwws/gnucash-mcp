@@ -169,6 +169,7 @@ def register(mcp, get_book) -> None:
         splits: list[SplitInput] | None = None,
         transaction_date: str | None = None,
         currency: str | None = None,
+        num: str | None = None,
         notes: str | None = None,
         check_duplicates: bool = True,
         force_create: bool = False,
@@ -201,6 +202,8 @@ def register(mcp, get_book) -> None:
                 from the most recent matching-description transaction.
             transaction_date: ISO date (YYYY-MM-DD). Defaults to today.
             currency: ISO currency code. Defaults to book's default.
+            num: Transaction number / reference (e.g. "ER 2658" for
+                Eingangsrechnung, "AR 261" for Ausgangsrechnung).
             notes: Optional free-text annotation.
             check_duplicates: Run duplicate detection. Default True.
             force_create: Create even if HIGH-confidence duplicates found.
@@ -213,6 +216,7 @@ def register(mcp, get_book) -> None:
             splits=_splits_to_dicts(splits),
             trans_date=trans_date,
             currency=currency,
+            num=num,
             notes=notes,
             check_duplicates=check_duplicates,
             force_create=force_create,
@@ -380,6 +384,7 @@ def register(mcp, get_book) -> None:
         description: str | None = None,
         transaction_date: str | None = None,
         splits: list[SplitInput] | None = None,
+        num: str | None = None,
         notes: str | None = None,
         force: bool = False,
     ) -> str:
@@ -393,6 +398,7 @@ def register(mcp, get_book) -> None:
                     Must match existing splits by account name and balance to zero.
                     For cross-currency splits, include 'quantity' (amount in account's commodity).
                     ``amount``/``quantity`` are decimal strings (e.g. "94.87").
+            num: Transaction number / reference (e.g. "ER 2658", "AR 261"). Pass empty string to clear.
             notes: New transaction notes (optional). Pass empty string to clear.
             force: Allow modifying transactions with reconciled splits
         """
@@ -403,6 +409,7 @@ def register(mcp, get_book) -> None:
             description=description,
             trans_date=trans_date,
             splits=_splits_to_dicts(splits),
+            num=num,
             notes=notes,
             force=force,
         )

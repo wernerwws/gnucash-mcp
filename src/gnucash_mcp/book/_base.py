@@ -423,6 +423,8 @@ def _transaction_to_dict(transaction: piecash.Transaction) -> dict:
         "currency": transaction.currency.mnemonic,
         "splits": [_split_to_dict(s) for s in transaction.splits],
     }
+    if transaction.num:
+        result["num"] = transaction.num
     if transaction.notes:
         result["notes"] = transaction.notes
     return result

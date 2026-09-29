@@ -2667,6 +2667,7 @@ class CoreMixin:
         splits: list[dict] | None = None,
         trans_date: date | None = None,
         currency: str | None = None,
+        num: str | None = None,
         notes: str | None = None,
         check_duplicates: bool = True,
         force_create: bool = False,
@@ -2904,6 +2905,7 @@ class CoreMixin:
             transaction = piecash.Transaction(
                 currency=trans_currency,
                 description=description,
+                num=num or "",
                 notes=notes,
                 post_date=trans_date,
                 splits=piecash_splits,
@@ -3589,6 +3591,7 @@ class CoreMixin:
         description: str | None = None,
         trans_date: date | None = None,
         splits: list[dict] | None = None,
+        num: str | None = None,
         notes: str | None = None,
         force: bool = False,
     ) -> dict:
@@ -3643,6 +3646,10 @@ class CoreMixin:
             # Update description if provided
             if description is not None:
                 transaction.description = description
+
+            # Update num if provided
+            if num is not None:
+                transaction.num = num
 
             # Update notes if provided
             if notes is not None:

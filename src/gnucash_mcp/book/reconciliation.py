@@ -183,7 +183,7 @@ class ReconciliationMixin:
                         "guid": split.guid,
                         "date": split.transaction.post_date.isoformat(),
                         "description": split.transaction.description,
-                        "amount": str(split.quantity),
+                        "amount": str(split.quantity.quantize(Decimal("0.01"))),
                         "reconcile_state": split.reconcile_state,
                         "memo": split.memo or "",
                     }
@@ -208,8 +208,8 @@ class ReconciliationMixin:
                 "splits": unreconciled,
                 # Totals always reflect the full unreconciled set —
                 # truncation hides line items, never the headline summary.
-                "cleared_total": str(cleared_total),
-                "uncleared_total": str(uncleared_total),
+                "cleared_total": str(cleared_total.quantize(Decimal("0.01"))),
+                "uncleared_total": str(uncleared_total.quantize(Decimal("0.01"))),
                 "count": len(unreconciled),
                 "total": total_count,
                 "notice": notice,
@@ -228,8 +228,8 @@ class ReconciliationMixin:
                     for s in unreconciled
                 ]
                 footer = (
-                    f"{total_count} splits\tcleared:{cleared_total}\t"
-                    f"uncleared:{uncleared_total}"
+                    f"{total_count} splits\tcleared:{cleared_total.quantize(Decimal('0.01'))}\t"
+                    f"uncleared:{uncleared_total.quantize(Decimal('0.01'))}"
                 )
                 lines.append(footer)
                 if notice:
